@@ -1,37 +1,27 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import '@/App.css'
+import { useProfile } from '@/hooks'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { data: profile, isLoading, error } = useProfile()
+
+  if (isLoading) {
+    return <div>Loading profile...</div>
+  }
+
+  if (error) {
+    return <div>Error loading profile: {error.message}</div>
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
+        <h1>Profile</h1>
+        {profile && (
+          <div>
+            <p>Name: {profile.name}</p>
+            <p>Email: {profile.email}</p>
+            {/* Render other profile data as needed */}
+          </div>
+        )}
       </header>
     </div>
   )

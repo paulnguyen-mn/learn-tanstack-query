@@ -7,6 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 import Profile from './pages/profile' // Assuming you have a Profile component
+import TnxDetailsComponent from './pages/tnx-details'
 
 // create once with default options
 const queryClient = new QueryClient()
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />,
+      },
+      {
+        path: 'tnx-details',
+        element: <TnxDetailsComponent />,
       },
     ],
   },

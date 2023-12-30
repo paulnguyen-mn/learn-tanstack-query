@@ -10,6 +10,10 @@ function App() {
       path: 'profile',
       label: 'Profile',
     },
+    {
+      path: 'tnx-details',
+      label: 'Transaction Details',
+    },
   ]
 
   return (

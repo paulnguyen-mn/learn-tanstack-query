@@ -1,7 +1,13 @@
 import { useProfile } from '@/hooks'
+import { useState } from 'react'
 
 function App() {
-  const { data: profile, isLoading, error } = useProfile()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { data: profile, isLoading, error } = useProfile({ enabled: isLoggedIn })
+
+  const toggleLogin = () => {
+    setIsLoggedIn(!isLoggedIn)
+  }
 
   if (isLoading) {
     return <div>Loading profile...</div>
@@ -15,7 +21,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Profile</h1>
-        {profile && (
+        <button onClick={toggleLogin}>Toggle Login</button>
+
+        {isLoggedIn && profile && (
           <div>
             <p>Name: {profile.name}</p>
             <p>Email: {profile.email}</p>

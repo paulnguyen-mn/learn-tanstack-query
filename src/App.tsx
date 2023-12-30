@@ -1,36 +1,37 @@
-import { useProfile } from '@/hooks'
-import { useState } from 'react'
+import { NavLink, Outlet } from 'react-router-dom'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const { data: profile, isLoading, error } = useProfile({ enabled: isLoggedIn })
-
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn)
-  }
-
-  if (isLoading) {
-    return <div>Loading profile...</div>
-  }
-
-  if (error) {
-    return <div>Error loading profile: {error.message}</div>
-  }
+  const urlList = [
+    {
+      path: '/',
+      label: 'Home',
+    },
+    {
+      path: 'profile',
+      label: 'Profile',
+    },
+  ]
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Profile</h1>
-        <button onClick={toggleLogin}>Toggle Login</button>
+      {/* Simple Nav */}
+      <ul>
+        {urlList.map(({ path, label }) => (
+          <li key={path} style={{ margin: '10px 0' }}>
+            <NavLink
+              to={path}
+              style={({ isActive }) => ({
+                fontWeight: isActive ? 'bold' : 'normal',
+                color: isActive ? 'goldenrod' : 'black',
+              })}
+            >
+              {label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
 
-        {isLoggedIn && profile && (
-          <div>
-            <p>Name: {profile.name}</p>
-            <p>Email: {profile.email}</p>
-            {/* Render other profile data as needed */}
-          </div>
-        )}
-      </header>
+      <Outlet />
     </div>
   )
 }
